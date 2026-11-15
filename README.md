@@ -18,6 +18,27 @@ curl.exe -X POST "http://localhost:8080/ia/v1/ia/preguntar" \
 
 Swagger: http://localhost:8080/swagger-ui/index.html
 
+### Crear un agente
+
+El endpoint `POST /agent/v1/ia/agentes` recibe un nombre e instrucciones para
+registrar un agente en memoria. La respuesta incluye su identificador UUID; los
+agentes se pierden al reiniciar la aplicación.
+
+```bash
+curl.exe -X POST "http://localhost:8080/agent/v1/ia/agentes" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"nombre":"Tutor","instrucciones":"Explica los conceptos con ejemplos claros."}'
+```
+
+Usa el `id` recibido para enviar consultas al agente. Groq aplicará sus
+instrucciones y la cantidad máxima de palabras indicada:
+
+```bash
+curl.exe -X POST "http://localhost:8080/agent/v1/ia/agentes/ID_DEL_AGENTE/preguntar" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"pregunta":"¿Qué es una API REST?","palabras_maximas":100}'
+```
+
 ### docker
 >- docker build -t debuggeando-ideas:2.0 .
 >- docker rmi image_id

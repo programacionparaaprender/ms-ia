@@ -27,6 +27,10 @@ public class AsyncGroqService {
     }
 
     public Mono<ConsultaIAResponse> consultar(ConsultaIA consulta) {
+        return consultar(consulta, "Eres un experto técnico.");
+    }
+
+    public Mono<ConsultaIAResponse> consultar(ConsultaIA consulta, String instrucciones) {
         if (apiKey.isBlank()) {
             return Mono.error(new IllegalStateException("La variable de entorno GROQ_API_KEY no está configurada."));
         }
@@ -36,7 +40,7 @@ public class AsyncGroqService {
                 "messages", List.of(
                         Map.of(
                                 "role", "system",
-                                "content", "Eres un experto técnico. Responde en máximo "
+                                "content", instrucciones + " Responde en máximo "
                                         + consulta.getPalabrasMaximas()
                                         + " palabras. Traduce al español."
                         ),

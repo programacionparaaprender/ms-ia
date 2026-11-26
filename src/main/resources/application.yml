@@ -1,12 +1,20 @@
 spring:
   application:
-    name: tutorial-jwt  
-
+    name: ms-ia
+  main:
+    banner-mode: off 
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gemma3:4b
+          temperature: 0.2
 server:
   port: 8080
   
 logging:
   level:
-    me.silvernine: DEBUG
+    root: error
 
 
